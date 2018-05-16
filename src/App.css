@@ -1,0 +1,33 @@
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-grid {
+}
+
+.row {
+  margin: 0px;
+  display: flex;
+}
+
+.box {
+  display: flex;
+  flex: 1;
+  border-style: solid;
+  border-width: 1px;
+  margin: 3px;
+  width: 5em;
+  height: 5em;
+}
+
+.data {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  font-size: 1.3em;
+}
