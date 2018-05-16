@@ -31,7 +31,6 @@ class App extends Component {
         winner = board[1][1];
       }
       if (winner !== '') {
-        console.log(winner)
         this.setState({winner})
       }
     }
@@ -51,11 +50,32 @@ class App extends Component {
     }
   }
 
+  resetBoard = () => {
+    this.setState({
+      board: [
+        [...Array(3)],
+        [...Array(3)],
+        [...Array(3)],
+      ],
+      xplays: true,
+      winner: '',
+    })
+  }
+
   render() {
-    const { winner } = this.state;
+    const { winner, xplays } = this.state;
 
     return (
       <div className='container'>
+        {!winner &&
+          <div className='current-player'>
+            Current player: {xplays === true ? 'X' : 'Y'}
+          </div>
+        }
+
+        {winner &&
+          <div className='winner'>{winner} wins!</div>
+        }
         <div className='flex-grid'>
           {this.state.board.map((row , i) => (
             <div key={i} className='row'>
@@ -69,9 +89,9 @@ class App extends Component {
             </div>
           ))}
         </div>
-        {winner &&
-          <p>{winner} wins!</p>
-        }
+
+        <button className='button' onClick={() => this.resetBoard()}>Reset board</button>
+
       </div>
     )
   }
