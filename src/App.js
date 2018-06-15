@@ -1,87 +1,91 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      board: [
-        [...Array(3)],
-        [...Array(3)],
-        [...Array(3)],
-      ],
+      board: [[...Array(3)], [...Array(3)], [...Array(3)]],
       xplays: true,
-      winner: '',
-    }
+      winner: ""
+    };
   }
 
-  isWinner = (board) => {
-    if (this.state.winner === '') {
-      let winner = '';
-      for (let i = 0; i<3; i++) {
-        if (board[i][0] === board[i][1] && board[i][1] === board[i][2] && board[i][0] != null) {
+  isWinner = board => {
+    if (this.state.winner === "") {
+      let winner = "";
+      for (let i = 0; i < 3; i++) {
+        if (
+          board[i][0] === board[i][1] &&
+          board[i][1] === board[i][2] &&
+          board[i][0] != null
+        ) {
           winner = board[i][0];
         }
-        if (board[0][i] === board[1][i] && board[1][i] === board[2][i] && board[0][i] != null) {
+        if (
+          board[0][i] === board[1][i] &&
+          board[1][i] === board[2][i] &&
+          board[0][i] != null
+        ) {
           winner = board[0][i];
         }
       }
-      if ((board[0][0] === board[1][1] && board[1][1] === board[2][2] && board[0][0] != null) ||
-          (board[0][2] === board[1][1] && board[1][1] === board[2][0] && board[0][2])) {
+      if (
+        (board[0][0] === board[1][1] &&
+          board[1][1] === board[2][2] &&
+          board[0][0] != null) ||
+        (board[0][2] === board[1][1] &&
+          board[1][1] === board[2][0] &&
+          board[0][2])
+      ) {
         winner = board[1][1];
       }
-      if (winner !== '') {
-        this.setState({winner})
+      if (winner !== "") {
+        this.setState({ winner });
       }
     }
-  }
+  };
 
   setBox = (row, col) => {
     // create copy, mutate, pass back to state
     let temp = JSON.parse(JSON.stringify(this.state));
     if (temp.board[row][col] == null) {
-      let nextplay = this.state.xplays === true ? 'X' : 'O';
+      let nextplay = this.state.xplays === true ? "X" : "O";
       temp.board[row][col] = nextplay;
       this.isWinner(temp.board);
       this.setState({
         board: temp.board,
-        xplays: !this.state.xplays,
+        xplays: !this.state.xplays
       });
     }
-  }
+  };
 
   resetBoard = () => {
     this.setState({
-      board: [
-        [...Array(3)],
-        [...Array(3)],
-        [...Array(3)],
-      ],
+      board: [[...Array(3)], [...Array(3)], [...Array(3)]],
       xplays: true,
-      winner: '',
-    })
-  }
+      winner: ""
+    });
+  };
 
   render() {
     const { winner, xplays } = this.state;
 
     return (
-      <div className='container'>
-        {!winner &&
-          <div className='current-player'>
-            Current player: {xplays === true ? 'X' : 'Y'}
+      <div className="container">
+        {!winner && (
+          <div className="current-player">
+            Current player: {xplays === true ? "X" : "Y"}
           </div>
-        }
+        )}
 
-        {winner &&
-          <div className='winner'>{winner} wins!</div>
-        }
-        <div className='flex-grid'>
-          {this.state.board.map((row , i) => (
-            <div key={i} className='row'>
+        {winner && <div className="winner">{winner} wins!</div>}
+        <div className="flex-grid">
+          {this.state.board.map((row, i) => (
+            <div key={i} className="row">
               {row.map((box, j) => (
-                <div key={j} className='box'>
-                  <div className='data' onClick={() => this.setBox(i, j)}>
+                <div key={j} className="box">
+                  <div className="data" onClick={() => this.setBox(i, j)}>
                     {box}
                   </div>
                 </div>
@@ -90,10 +94,11 @@ class App extends Component {
           ))}
         </div>
 
-        <button className='button' onClick={() => this.resetBoard()}>Reset board</button>
-
+        <button className="button" onClick={() => this.resetBoard()}>
+          Reset board
+        </button>
       </div>
-    )
+    );
   }
 }
 
